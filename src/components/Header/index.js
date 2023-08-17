@@ -22,24 +22,43 @@ class Header extends Component {
     this.setState({showMenu: false})
   }
 
-  onChangeSearchInput = event => {
+  showResults = () => {
     const {searchInput} = this.props
     const {search} = this.state
+    searchInput(search)
+  }
+
+  onChangeSearchInput = event => {
     if (event.key === 'Enter') {
-      this.setState({search: event.target.value})
-      searchInput(search)
+      this.setState({search: event.target.value}, this.showResults)
     }
     this.setState({search: event.target.value})
   }
 
-  onSearch = () => {
-    this.setState(prevState => ({
-      showSearchBar: !prevState.showSearchBar,
-    }))
+  renderSearchBar = () => {
+    const {showSearchBar} = this.state
+    console.log(showSearchBar)
+    const name = showSearchBar ? 'show-search' : 'search-bar'
+    return (
+      <div>
+        {showSearchBar && (
+          <input
+            type="search"
+            onKeyDown={this.onChangeSearchInput}
+            className={name}
+            placeholder="search"
+          />
+        )}
+      </div>
+    )
+  }
+
+  onChangeSearch = () => {
+    this.setState({showSearchBar: true})
   }
 
   render() {
-    const {showMenu, showSearchBar} = this.state
+    const {showMenu} = this.state
     const {match} = this.props
     const {path} = match
     let homeClassNameStyling
@@ -52,7 +71,7 @@ class Header extends Component {
         popularClassNameStyling = 'active'
         accountClassNameStyling = 'passive'
         break
-      case '/profile':
+      case '/account':
         homeClassNameStyling = 'passive'
         popularClassNameStyling = 'passive'
         accountClassNameStyling = 'active'
@@ -63,48 +82,41 @@ class Header extends Component {
         accountClassNameStyling = 'passive'
         break
     }
-
     return (
       <nav className="nav-container">
         <div className="nav-elements-container">
           <Link to="/">
             <img
               src="https://res.cloudinary.com/dyx9u0bif/image/upload/v1657426908/lg-devices-logo_rpfa68.png"
-              className="app-logo"
+              className="header-logo"
               alt="website logo"
             />
           </Link>
-          <ul className="nav-list-items">
+          <div className="nav-list-items">
             <Link to="/" className="nav-link">
-              <li className={`popup-heading ${homeClassNameStyling}`}>Home</li>
+              <p className={`popup-heading ${homeClassNameStyling}`}>Home</p>
             </Link>
 
             <Link to="/popular" className="nav-link">
-              <li className={`popup-heading ${popularClassNameStyling}`}>
+              <p className={`popup-heading ${popularClassNameStyling}`}>
                 Popular
-              </li>
+              </p>
             </Link>
-          </ul>
+          </div>
           <div className="actions-container">
             <div className="icons-container">
-              {showSearchBar && (
-                <input
-                  type="search"
-                  onKeyDown={this.onChangeSearchInput}
-                  className="search-bar"
-                  placeholder="search"
-                />
-              )}
-              <Link to="/search">
-                <button
-                  type="button"
-                  className="icon-button"
-                  onClick={this.onSearch}
-                  testid="searchButton"
-                >
+              {this.renderSearchBar()}
+
+              <button
+                type="button"
+                className="icon-button"
+                onClick={this.onChangeSearch}
+                testid="searchButton"
+              >
+                <Link to="/search">
                   <HiOutlineSearch size={25} color="white" />
-                </button>
-              </Link>
+                </Link>
+              </button>
             </div>
             <Link to="/account">
               <img
@@ -124,22 +136,22 @@ class Header extends Component {
           />
           <div>
             {showMenu && (
-              <ul className="list-mini">
+              <div className="list-mini">
                 <Link to="/" className="nav-link">
-                  <li className={`popup-heading ${homeClassNameStyling}`}>
+                  <p className={`popup-heading ${homeClassNameStyling}`}>
                     Home
-                  </li>
+                  </p>
                 </Link>
                 <Link to="/popular" className="nav-link">
-                  <li className={`popup-heading ${popularClassNameStyling}`}>
+                  <p className={`popup-heading ${popularClassNameStyling}`}>
                     Popular
-                  </li>
+                  </p>
                 </Link>
 
                 <Link to="/account" className="nav-link">
-                  <li className={`popup-heading ${accountClassNameStyling}`}>
+                  <p className={`popup-heading ${accountClassNameStyling}`}>
                     Account
-                  </li>
+                  </p>
                 </Link>
                 <ImCross
                   size={10}
@@ -147,7 +159,7 @@ class Header extends Component {
                   onClick={this.onClickHideMenu}
                   className="icon"
                 />
-              </ul>
+              </div>
             )}
           </div>
         </div>

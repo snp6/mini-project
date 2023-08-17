@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-
 import Header from '../Header'
 import Footer from '../Footer'
 import './index.css'
@@ -19,9 +18,9 @@ const Account = props => {
 
   return (
     <>
-      <div className="account-root-container">
+      <div>
         <Header />
-        <div className="account-details-container">
+        <div className="account-details-container" testid="account">
           <h1 className="account-heading">Account</h1>
           <hr className="hr-line" />
           <div className="member-details-container">

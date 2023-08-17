@@ -4,7 +4,6 @@ import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import FailureView from '../FailureView'
-import Footer from '../Footer'
 import MovieItem from '../MovieItem'
 import './index.css'
 
@@ -106,30 +105,11 @@ class SearchFilter extends Component {
     )
   }
 
-  renderSuccessView = () => {
-    const {searchInput} = this.state
-    const isEmpty = searchInput === ''
-    console.log(isEmpty)
-    return (
-      <div>
-        {isEmpty ? (
-          <div className="search-filter-initial-no-search">
-            <p className="empty-text">
-              Search the movie,by clicking on the search Icon
-            </p>
-          </div>
-        ) : (
-          this.renderResultsView()
-        )}
-      </div>
-    )
-  }
-
   renderSearchMovies = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderSuccessView()
+        return this.renderResultsView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
       case apiStatusConstants.inProgress:
@@ -142,10 +122,9 @@ class SearchFilter extends Component {
 
   render() {
     return (
-      <div className="search-filter-bg-container">
+      <div>
         <Header searchInput={this.searchInput} />
-        <div>{this.renderSearchMovies()}</div>
-        <Footer />
+        {this.renderSearchMovies()}
       </div>
     )
   }

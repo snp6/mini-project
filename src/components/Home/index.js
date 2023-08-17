@@ -3,9 +3,9 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 
 import Loader from 'react-loader-spinner'
-
-import HomePoster from '../HomePoster'
 import Header from '../Header'
+import HomePoster from '../HomePoster'
+
 import FailureView from '../FailureView'
 import TrendingNow from '../TrendingNow'
 import Originals from '../Originals'
@@ -102,7 +102,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="root-container">
+      <div>
         <Header />
         <div className="home-sizes-container">{this.renderHomePoster()}</div>
 

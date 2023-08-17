@@ -6,11 +6,11 @@ const MovieItem = props => {
   const {id, title, posterPath} = details
 
   return (
-    <li className="popular-li-item">
-      <Link to={`/movies/${id}`} target="blank">
+    <Link to={`/movies/${id}`} target="blank">
+      <li className="popular-li-item">
         <img className="popular-poster" src={posterPath} alt={title} />
-      </Link>
-    </li>
+      </li>
+    </Link>
   )
 }
 

@@ -6,9 +6,10 @@ import Cookies from 'js-cookie'
 
 import Footer from '../Footer'
 import FailureView from '../FailureView'
-import Header from '../Header'
+
 import MovieDetail from '../MovieDetail'
 import MovieItem from '../MovieItem'
+
 import './index.css'
 
 const apiStatusConstants = {
@@ -18,7 +19,7 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 }
 
-class MovieDetailView extends Component {
+class MovieDetails extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
     movieDetails: {},
@@ -142,22 +143,26 @@ class MovieDetailView extends Component {
           </div>
         </div>
         <div className="additional-movie-info-container additional-info-sm-container">
-          <h1 className="movie-info-genre-heading">Genres</h1>
-          <ul className="each-genre-ul-container">
-            {genres.map(eachGenre => (
-              <li className="movie-info-each-genre" key={eachGenre.id}>
-                <p>{eachGenre.name}</p>
-              </li>
-            ))}
-          </ul>
-          <h1 className="movie-info-genre-heading">Audio Available</h1>
-          <ul className="each-genre-ul-container">
-            {spokenLanguages.map(eachAudio => (
-              <li className="movie-info-each-genre" key={eachAudio.id}>
-                <p>{eachAudio.language}</p>
-              </li>
-            ))}
-          </ul>
+          <div className="each-genre-ul-container">
+            <h1 className="movie-info-genre-heading">Genres</h1>
+            <ul className="each-genre-ul-container">
+              {genres.map(eachGenre => (
+                <li className="movie-info-each-genre" key={eachGenre.id}>
+                  <p>{eachGenre.name}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="each-genre-ul-container">
+            <h1 className="movie-info-genre-heading">Audio Available</h1>
+            <ul className="each-genre-ul-container">
+              {spokenLanguages.map(eachAudio => (
+                <li className="movie-info-each-genre" key={eachAudio.id}>
+                  <p>{eachAudio.language}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="each-genre-ul-container">
             <h1 className="movie-info-rating-count-heading">Rating Count</h1>
@@ -209,8 +214,7 @@ class MovieDetailView extends Component {
   render() {
     return (
       <div className="dummy">
-        <Header />
-        <div className="root-container">
+        <div className="root-container" testid="movieItem">
           <div className="video-details-view-container">
             {this.renderVideoDetailView()}
           </div>
@@ -220,4 +224,4 @@ class MovieDetailView extends Component {
     )
   }
 }
-export default MovieDetailView
+export default MovieDetails
